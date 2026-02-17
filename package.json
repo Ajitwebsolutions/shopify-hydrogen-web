@@ -1,0 +1,33 @@
+{
+  "name": "headless-shopify-next-store",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint",
+    "lighthouse": "echo 'Run Lighthouse CI against deployed Vercel preview URL'"
+  },
+  "dependencies": {
+    "next": "14.2.14",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "graphql-request": "7.1.2",
+    "@sanity/client": "6.28.3",
+    "framer-motion": "12.5.0"
+  },
+  "devDependencies": {
+    "typescript": "5.7.3",
+    "@types/node": "22.10.5",
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5",
+    "tailwindcss": "3.4.17",
+    "postcss": "8.4.49",
+    "autoprefixer": "10.4.20",
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.2.14"
+  }
+}
