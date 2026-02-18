@@ -1,41 +1,25 @@
-import {PassThrough} from 'node:stream';
-import {renderToPipeableStream} from 'react-dom/server';
+import {renderToReadableStream} from 'react-dom/server';
 import {RemixServer} from '@remix-run/react';
 import type {EntryContext} from '@shopify/remix-oxygen';
 
-export default function handleRequest(
+export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) {
-  return new Promise<Response>((resolve, reject) => {
-    let didError = false;
+  const body = await renderToReadableStream(<RemixServer context={remixContext} url={request.url} />, {
+    signal: request.signal,
+    onError(error: unknown) {
+      console.error(error);
+      responseStatusCode = 500;
+    },
+  });
 
-    const {pipe, abort} = renderToPipeableStream(
-      <RemixServer context={remixContext} url={request.url} />,
-      {
-        onShellReady() {
-          const body = new PassThrough();
-          responseHeaders.set('Content-Type', 'text/html');
-          resolve(
-            new Response(body as unknown as BodyInit, {
-              status: didError ? 500 : responseStatusCode,
-              headers: responseHeaders,
-            }),
-          );
-          pipe(body);
-        },
-        onShellError(error: unknown) {
-          reject(error);
-        },
-        onError(error: unknown) {
-          didError = true;
-          console.error(error);
-        },
-      },
-    );
+  responseHeaders.set('Content-Type', 'text/html');
 
-    setTimeout(abort, 5_000);
+  return new Response(body, {
+    status: responseStatusCode,
+    headers: responseHeaders,
   });
 }

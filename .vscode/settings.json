@@ -1,0 +1,4 @@
+{
+  "ollama-chat.serverUrl": "http://127.0.0.1:11434",
+  "ollama-chat.defaultModel": "llama3.2:latest"
+}

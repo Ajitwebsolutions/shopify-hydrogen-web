@@ -8,7 +8,7 @@ export function AnimatedDrawer({children}: PropsWithChildren) {
       animate={{x: 0}}
       exit={{x: '100%'}}
       transition={{type: 'spring', stiffness: 260, damping: 24}}
-      className="fixed right-0 top-0 h-full w-[420px] max-w-full bg-white shadow-2xl"
+      data-cart-drawer="true"
       aria-label="Shopping cart drawer"
     >
       {children}
