@@ -1,7 +1,5 @@
-import {defineConfig} from '@shopify/hydrogen/config';
-
-export default defineConfig({
+export default {
   server: {
     preset: 'oxygen',
   },
-});
+};
