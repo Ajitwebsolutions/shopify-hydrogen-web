@@ -12,8 +12,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run build
+          cache: yarn
+          cache-dependency-path: yarn.lock
+      - run: corepack enable
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+      - run: yarn install --immutable
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+      - run: yarn run build
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
       - name: Lighthouse CI
-        run: npm run lighthouse
+        run: yarn run lighthouse
+        env:
+          COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
